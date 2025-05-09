@@ -1,17 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ServicesController } from './services.controller';
-import { ServicesService } from './services.service';
-
+import { AppModule } from '../app.module';
+import { Connection } from 'typeorm';
 describe('ServicesController', () => {
   let controller: ServicesController;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [ServicesController],
-      providers: [ServicesService],
+    module = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
     controller = module.get<ServicesController>(ServicesController);
+  });
+
+  afterAll(async () => {
+    await module.get(Connection).close();
   });
 
   it('should be defined', () => {

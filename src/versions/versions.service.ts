@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 import { CreateVersionDto } from './dto/create-version.dto';
 import { UpdateVersionDto } from './dto/update-version.dto';
 
 @Injectable()
 export class VersionsService {
   create(createVersionDto: CreateVersionDto) {
-    return 'This action adds a new version';
+    throw new NotImplementedException();
   }
 
   findAll() {
-    return `This action returns all versions`;
+    throw new NotImplementedException();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} version`;
+    throw new NotImplementedException();
   }
 
   update(id: number, updateVersionDto: UpdateVersionDto) {
-    return `This action updates a #${id} version`;
+    throw new NotImplementedException();
   }
 
   remove(id: number) {
-    return `This action removes a #${id} version`;
+    throw new NotImplementedException();
   }
 }

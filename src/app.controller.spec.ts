@@ -1,22 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppModule } from './app.module';
+import { Connection } from 'typeorm';
 
 describe('AppController', () => {
   let appController: AppController;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+    module = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    appController = module.get<AppController>(AppController);
+  });
+
+  afterAll(async () => {
+    await module.get(Connection).close();
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "Welcome to Kongs Services API"', () => {
+      expect(appController.getHello()).toBe('Welcome to Kongs Services API');
     });
   });
 });

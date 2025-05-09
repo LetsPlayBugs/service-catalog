@@ -1,9 +1,7 @@
-import cuid2 from "@paralleldrive/cuid2";
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 
-
-export class BaseEntity {
-  @PrimaryGeneratedColumn()
+export class CommonEntity extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
@@ -13,8 +11,9 @@ export class BaseEntity {
   updatedAt: Date;
 
   constructor() {
-    this.id = cuid2.createId();
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
+    super();
+    this.id = crypto.randomUUID();
+    this.createdAt = new Date(0);
+    this.updatedAt = new Date(0);
   }
 }
