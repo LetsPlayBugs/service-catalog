@@ -84,3 +84,6 @@ Our scenario has two key characteristics:
 
 ### 🐘 CRUD API
 I have left signatures for the POST, PATCH and PUT of the Service's API as a demonstration of how I would organize my REST resources
+
+### Pull Requests
+Commits were not done through pull requests as this project is a demonstration. In reality, the main branch is protected and modifications are reviewed.
