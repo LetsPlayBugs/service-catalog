@@ -8,10 +8,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres_test
-  PNPM_VERSION: 8
-
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
