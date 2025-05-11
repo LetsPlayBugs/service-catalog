@@ -16,6 +16,7 @@ A modern service catalog application built with NestJS and PostgreSQL. This appl
 - Node.js
 - PostgreSQL
 - Docker
+- pnpm v8.15.9
 
 ### Installation
 
@@ -33,6 +34,11 @@ nvm use && pnpm install
 3. Start the database
 ```bash
 docker-compose up -d
+```
+
+3. Seed
+```bash
+pnpm seed:run
 ```
 
 4. Run the application

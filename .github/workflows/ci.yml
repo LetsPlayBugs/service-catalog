@@ -4,10 +4,17 @@ on:
   push:
     branches: [ main ]
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
+env:
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres_test
+  PNPM_VERSION: 8
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:15
@@ -24,45 +31,36 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
 
-    - name: Setup nvm
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Get node version
+        id: get-node-version
+        shell: bash
+        run: echo "node_version=$(sed 's/v//' .nvmrc)" >> $GITHUB_OUTPUT
+      - name: Set up Node JS
+        id: set-up-node-js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.get-node-version.outputs.node_version }}
+      
+      - name: Create pg_trgm extension
+        run: |
+          PGPASSWORD=postgres psql -h localhost -U postgres -d postgres_test -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
 
-    - name: Use nvm to install and use Node.js version from .nvmrc
-      run: |
-        nvm install
-        nvm use
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm@8.15.9
+          pnpm install
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
-        run_install: false
+      - name: Run linting
+        run: pnpm lint
 
-    - name: Get pnpm store directory
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-    - name: Setup pnpm cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ env.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-
-    - name: Install dependencies
-      run: pnpm install
-
-    - name: Run linting
-      run: pnpm lint
-
-    - name: Run tests
-      run: pnpm test
-      env:
-        NODE_ENV: test
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres_test
+      - name: Run tests
+        run: pnpm test
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres_test
