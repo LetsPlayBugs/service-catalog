@@ -22,7 +22,7 @@ A modern service catalog application built with NestJS and PostgreSQL. This appl
 
 1. Clone the repository
 ```bash
-git clone https://github.com/LetsPlayBugs/service-catalog.git
+git clone git@github.com:LetsPlayBugs/service-catalog.git
 cd service-catalog
 ```
 
@@ -36,14 +36,14 @@ nvm use && pnpm install
 docker-compose up -d
 ```
 
-4. Seed
-```bash
-pnpm seed:run
-```
-
-5. Setup environment variables
+4. Setup environment variables
 ```bash
 cp .env.example .env
+```
+
+5. Seed
+```bash
+pnpm seed:run
 ```
 
 6. Run the application
