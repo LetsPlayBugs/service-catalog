@@ -1,6 +1,6 @@
 # 📝 Development Journal
 
-## 🔍 Things Not Considered
+## 🔍 Things Not Considered For This Round.
 
 1. **Infrastructure**
    - Deployment architecture
@@ -56,15 +56,13 @@
 ```sql
 CREATE EXTENSION pg_trgm;
 ```
-`pg_trgm` is required for the fuzzy searching capabilities. If its not installed, the search wont work.
+`pg_trgm` is required for the fuzzy searching capabilities. If its not installed, the search wont work. I had chosen pg_trgm because it was the fastest way to have some emulation of a real life search functionality without much development overhead. In reality, most enterprise organizations use search engines such as ElasticSearch or OpenSearch which provide a more rich text search feature set.
 
 ### Testing
-- Current tests focus on happy path end-to-end scenarios for the API's listed in the requirements.
-In a real system, I will have comprehensive test coverage on all cases.
-For example, we should consider what should happen if the user enters in non-ASCII characters or if malicious users attempt to inject SQL.
+Current tests focus on end-to-end scenarios for the API's listed in the requirements.
+In a real system, I will have comprehensive test coverage on all cases for ALL api's.
 
 ### 🐘 Why PostgreSQL?
-
 #### 1. Production-Ready & Extensible
 - Battle-tested in production environments
 - Rich ecosystem of extensions
@@ -84,7 +82,8 @@ Our scenario has two key characteristics:
 
 
 ### 🐘 CRUD API
-I have left signatures for the POST, PATCH and PUT of the Service's API as a demonstration of how I would organize my REST resources
+ - I have left signatures for the POST, PATCH and PUT of the Service's API as a demonstration of idiomatic REST patterns.
+ - The details api is limited to only 2 active latest versions. This was done to account for pagination issues that would arise if we return all the versions in the details API and the additional development overhead of nesting resources. Should our client need the entire list, I would recommend creating a dedicated list api for the versions.
 
 ### Pull Requests
 Commits were not done through pull requests as this project is a demonstration. In reality, the main branch is protected and modifications are reviewed.

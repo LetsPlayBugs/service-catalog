@@ -1,13 +1,43 @@
 # 🚀 Service Catalog
 
-A modern service catalog application built with NestJS and PostgreSQL. This application powers the Service Card List Page
+A modern service catalog application built with NestJS, TypeORM and PostgreSQL. 
 
-## 🛠️ Tech Stack
+## Structure of the project / Approach
+This project provides extensive CRUD operations for the Service Catalog application.
+It is organized with idioms and patterns that follow the [NestJS framework](https://docs.nestjs.com/).
+The approach is further discussed in the Journal.MD file.
 
-- **Backend**: NestJS
-- **Database**: PostgreSQL
-- **Authentication**: JWT
-- **Testing**: Jest
+### Core Directory Structure
+```
+   src/
+   ├── authentication/     # Authentication and authorization logic
+   ├── common/            # Shared utilities and decorators
+   ├── config/            # Configuration files
+   ├── database/          # Database migrations and seeds
+   ├── services/          # Service catalog core functionality
+   ├── users/             # User management
+   ├── versions/          # Version management
+   └── main.ts           # Application entry point
+```
+
+### Feature Module Organization
+```
+   services/
+   ├── dto/              # Data Transfer Objects
+   ├── entities/         # Database entities
+   ├── response/         # Response DTOs
+   ├── services.controller.ts
+   ├── services.service.ts
+   └── services.module.ts
+```
+
+### Testing Structure
+ - End-to-end tests **.e2e.spec.ts**
+ - Unit tests **.spec.ts**
+
+## Known issues.
+Known issues are discussed extensively in the Journal.MD file.
+
 
 ## 🚦 Getting Started
 
@@ -67,7 +97,3 @@ pnpm test src/app.e2e.spec.ts
 ## 📝 API Documentation
 
 API documentation is available at `/docs` when running the application.
-
-## 🐛 Bug Tracking
-
-[Link to bug tracker to be introduced]

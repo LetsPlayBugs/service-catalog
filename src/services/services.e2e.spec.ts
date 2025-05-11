@@ -264,6 +264,40 @@ describe('ServicesController (e2e)', () => {
         });
     });
 
+    it('handles weird chars', () => {
+      return request(app.getHttpServer())
+        .get('/v1/services')
+        .set('Authorization', `Bearer ${token}`)
+        .query({
+          page: 1,
+          size: 3,
+          sort: '…‰‹›:desc',
+        })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toMatchObject({
+            statusCode: 400,
+            message: 'Invalid sort parameter',
+          });
+        });
+    });
+
+    it('handles weird chars', () => {
+      return request(app.getHttpServer())
+        .get('/v1/services')
+        .set('Authorization', `Bearer ${token}`)
+        .query({
+          filter: '<=:search:goup'
+        })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toMatchObject({
+            statusCode: 400,
+            message: 'Invalid filter parameter',
+          });
+        });
+    });
+
     it('paginates with sort and filter with fuzzy search', () => {
       return request(app.getHttpServer())
         .get('/v1/services')
@@ -407,6 +441,24 @@ describe('ServicesController (e2e)', () => {
         .set('Authorization', `Bearer ${token}`)
         .query({
           'fields[]': 'random',
+        })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({
+            statusCode: 400,
+            message: 'Invalid fields',
+            error: 'Bad Request',
+          });
+        });
+    });
+
+    it('handles a bad field', () => {
+      const serviceId = testUser.services[0].id;
+      return request(app.getHttpServer())
+        .get(`/v1/services/${serviceId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .query({
+          'fields[]': 'ÕÖ',
         })
         .expect(400)
         .expect((res) => {

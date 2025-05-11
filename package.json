@@ -84,7 +84,9 @@
     ],
     "coverageDirectory": "../coverage",
     "coveragePathIgnorePatterns": [
-      "/database/"
+      "/database/",
+      "src/config/typeorm-cli.config.ts",
+      "src/main.ts"
     ],
     "testEnvironment": "node"
   }
