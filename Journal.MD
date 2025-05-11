@@ -80,3 +80,7 @@ Our scenario has two key characteristics:
   - Complex relationships. I will likely need to JOIN a lot of tables to curate data.
   - Built in constraints and validations
   - Indexing and query optimizations
+
+
+### 🐘 CRUD API
+I have left signatures for the POST, PATCH and PUT of the Service's API as a demonstration of how I would organize my REST resources

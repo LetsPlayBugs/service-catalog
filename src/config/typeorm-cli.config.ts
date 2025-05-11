@@ -6,8 +6,6 @@ import { typeormConfig } from './typeorm.config';
 
 const options = {
   ...typeormConfig,
-  // migrationsTableName: 'typeorm_migrations',
-  // migrations: [__dirname + 'database/migrations/**/*.ts'],
   seeds: [InitSeeder],
 };
 

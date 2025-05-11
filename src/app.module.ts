@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VersionsModule } from './versions/versions.module';
 import { ServicesModule } from './services/services.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
@@ -19,7 +18,6 @@ import databaseConfig from './config/typeorm.config';
         configService.getOrThrow('database'),
       inject: [ConfigService],
     }),
-    VersionsModule,
     ServicesModule,
     UsersModule,
     AuthenticationModule,

@@ -23,6 +23,7 @@ export class AuthenticationService {
     // Passwords are one way salted, hashed and the hashes are compared (bycrpt).
     // I would also implement measures against timing attacks, and password spraying.
     if (user && password === user.password) {
+    // ````````
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;

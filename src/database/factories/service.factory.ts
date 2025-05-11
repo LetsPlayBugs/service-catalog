@@ -8,7 +8,6 @@ export default setSeederFactory(
     const name = faker.company.name();
     const description = faker.company.catchPhrase();
 
-    // If no user is provided, create a default one
     if (!user) {
       user = new User(faker.internet.email(), faker.internet.password(), []);
     }

@@ -15,8 +15,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   public validate(payload: AuthenticatedUser) {
-    // If we had our tokens stored in the database,
-    // we would do more validations such as checking if the token is expired, etc here.
     return { id: payload.id, email: payload.email };
   }
 }

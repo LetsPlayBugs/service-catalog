@@ -1,69 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Service } from "../entities/service.entity";
-import { Exclude, Expose, Type } from "class-transformer";
-export class UserResponseDto {
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  id!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  email!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  createdAt!: string;
-  
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  updatedAt!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Exclude()
-  password!: string;
-}
-
-export class VersionResponseDto {
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  id!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  versionNumber!: string;
-
-  @ApiProperty({
-    type: Boolean,
-  })
-  @Expose()
-  isActive!: boolean;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  createdAt!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  @Expose()
-  updatedAt!: string;
-}
+import { Expose, Type } from "class-transformer";
+import { VersionResponseDto } from "src/versions/response/version.response.dto";
+import { UserResponseDto } from "src/users/response/user.response.dto";
 
 export class FindOneResponseDto {
   @ApiProperty({

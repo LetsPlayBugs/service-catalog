@@ -12,7 +12,6 @@ export interface Filtering {
   value: string;
 }
 
-// valid filter rules
 export enum FilterRule {
   SEARCH = 'search',
 }
