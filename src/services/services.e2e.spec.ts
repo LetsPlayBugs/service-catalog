@@ -310,6 +310,53 @@ describe('ServicesController (e2e)', () => {
           });
         });
     });
+
+    it('handles case sensitivity', () => {
+      return request(app.getHttpServer())
+        .get('/v1/services')
+        .set('Authorization', `Bearer ${token}`)
+        .query({
+          page: 0,
+          size: 3,
+          sort: 'NAME:DESC',
+          // Note the intentional typo in the filter to test fuzzy search
+          filter: 'NAME:SEARCH:GROUP',
+        })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toMatchObject({
+            totalItems: 4,
+            page: 0,
+            size: 3,
+            items: expect.arrayContaining([
+              expect.objectContaining({
+                id: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                name: 'Service j group',
+                description: 'Description j',
+                versionCount: 3,
+              }),
+              expect.objectContaining({
+                id: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                name: 'Service h group',
+                description: 'Description h',
+                versionCount: 3,
+              }),
+              expect.objectContaining({
+                id: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                name: 'Service d group',
+                description: 'Description d',
+                versionCount: 3,
+              }),
+            ]),
+          });
+        });
+    });
   });
 
   describe('GET v1/services/:id', () => {

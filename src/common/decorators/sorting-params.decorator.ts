@@ -23,19 +23,21 @@ export const SortingParams = createParamDecorator(
 
     // extract the property name and direction and check if they are valid
     const [property, direction] = sort.split(':');
-    if (!validParams.includes(property))
+
+    const lowerCaseProperty = property.toLowerCase();
+    const upperCaseDirection = direction.toUpperCase();
+
+    if (!validParams.includes(lowerCaseProperty))
       throw new BadRequestException(`Invalid sort property: ${property}`);
     if (
-      direction !== 'ASC' &&
-      direction !== 'DESC' &&
-      direction !== 'asc' &&
-      direction !== 'desc'
+      upperCaseDirection !== 'ASC' &&
+      upperCaseDirection !== 'DESC'
     )
       throw new BadRequestException(`Invalid sort direction: ${direction}`);
 
     return {
-      property,
-      direction: direction.toUpperCase() as Sorting['direction'],
+      property: lowerCaseProperty as Sorting['property'],
+      direction: upperCaseDirection as Sorting['direction'],
     };
   },
 );

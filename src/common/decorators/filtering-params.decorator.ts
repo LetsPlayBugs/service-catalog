@@ -26,17 +26,23 @@ export const FilteringParams = createParamDecorator(
         'Filtering is not supported on this api',
       );
 
+    const lowerCaseFilter = filter.trim().toLowerCase();
+
     // validate the format of the filter
-    if (!filter.match(/^[a-zA-Z0-9_]+:(search)+:.+$/)) {
+    if (!lowerCaseFilter.match(/^[a-zA-Z0-9_]+:(search)+:.+$/)) {
       throw new BadRequestException('Invalid filter parameter');
     }
 
     // extract the parameters and validate if the rule and the property are valid
-    const [property, rule, value] = filter.split(':');
+    const [property, rule, value] = lowerCaseFilter.split(':');
     if (!data.includes(property))
       throw new BadRequestException(`Invalid filter property: ${property}`);
     if (!Object.values(FilterRule).includes(rule as FilterRule))
       throw new BadRequestException(`Invalid filter rule: ${rule}`);
-    return { property, rule: rule as FilterRule, value };
+    return {
+      property: property as Filtering['property'],
+      rule: rule as FilterRule,
+      value: value as Filtering['value'],
+    };
   },
 );

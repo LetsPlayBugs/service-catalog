@@ -74,7 +74,7 @@ For example, we should consider what should happen if the user enters in non-ASC
 #### 2. Perfect for Our Use Case
 Our scenario has two key characteristics:
 - **Early Stage Application**: PostgreSQL provides:
-  - Easy schema modifications
+  - Easy schema modifications and clearly defined data models
   - Simple scaling path
   - Rich feature set out of the box (extensions/json support)
 - **Relational Data Model**: PostgreSQL excels at:
@@ -88,3 +88,9 @@ I have left signatures for the POST, PATCH and PUT of the Service's API as a dem
 
 ### Pull Requests
 Commits were not done through pull requests as this project is a demonstration. In reality, the main branch is protected and modifications are reviewed.
+
+### Data Access Layer (DAL)
+ - A lot of large productionized projects have a dedicated data access layer.
+ - As this project is still in its early stages, I have elected to choose speed over correctness.
+ - Prematch optimization is the root of all evil.
+ - The project must be large enough to justify the development cost of a DAL.

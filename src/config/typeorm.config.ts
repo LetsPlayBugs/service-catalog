@@ -19,8 +19,6 @@ export const typeormConfig: TypeOrmModuleOptions = {
   entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
   // In reality, I would not be using synchronize.
   // This is only for demonstration/quick development purposes.
-  // logging: true,
-  // logger: 'advanced-console',
   synchronize: true,
   // ````
 };
