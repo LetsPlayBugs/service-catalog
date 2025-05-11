@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose, Exclude } from "class-transformer";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose, Exclude } from 'class-transformer';
 
 export class UserResponseDto {
   @ApiProperty({
@@ -19,7 +19,7 @@ export class UserResponseDto {
   })
   @Expose()
   createdAt!: string;
-  
+
   @ApiProperty({
     type: String,
   })

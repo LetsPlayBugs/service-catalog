@@ -1,14 +1,11 @@
 import { DataSource } from 'typeorm';
-import { runSeeders, Seeder, SeederFactoryManager } from 'typeorm-extension';
+import { runSeeders, Seeder } from 'typeorm-extension';
 import ServiceFactory from '../factories/service.factory';
 import VersionFactory from '../factories/version.factory';
 import UserServicesVersionsSeeder from './UsersServicesVersions.seeder';
 import UserFactory from '../factories/user.factory';
 export default class InitSeeder implements Seeder {
-  public async run(
-    dataSource: DataSource,
-    factoryManager: SeederFactoryManager,
-  ) {
+  public async run(dataSource: DataSource) {
     // Clean up existing data
     await dataSource.query('TRUNCATE TABLE "version" CASCADE');
     await dataSource.query('TRUNCATE TABLE "service" CASCADE');

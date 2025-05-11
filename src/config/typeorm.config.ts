@@ -3,11 +3,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 ConfigModule.forRoot({
-  envFilePath: [
-    process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
-  ],
+  envFilePath: [process.env.NODE_ENV === 'test' ? '.env.test' : '.env'],
 });
+
 export const typeormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST || 'localhost',

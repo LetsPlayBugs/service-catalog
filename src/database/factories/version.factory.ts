@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 
 export default setSeederFactory(
   Version,
-  async (faker, dataSource: DataSource, service?: Service) => {
+  (faker, dataSource: DataSource, service?: Service) => {
     const major = faker.number.int({ min: 1, max: 10 });
     const minor = faker.number.int({ min: 0, max: 99 });
     const patch = faker.number.int({ min: 0, max: 99 });

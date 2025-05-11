@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, NotImplementedException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Injectable,
+  NotFoundException,
+  NotImplementedException,
+} from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { Service } from './entities/service.entity';
@@ -18,9 +23,9 @@ export class ServicesService {
     private readonly serviceRepository: Repository<Service>,
     @InjectRepository(Version)
     private readonly versionRepository: Repository<Version>,
-  ) { }
+  ) {}
 
-  public async create(createServiceDto: CreateServiceDto) {
+  public create(createServiceDto: CreateServiceDto) {
     throw new NotImplementedException();
   }
 
@@ -74,7 +79,7 @@ export class ServicesService {
   }
 
   public async findOne(id: string, user: AuthenticatedUser, fields?: string[]) {
-    let relations = [];
+    const relations = [];
     let selectFields = {};
 
     const topVersions: Version[] = [];
@@ -83,18 +88,19 @@ export class ServicesService {
     if (fields && fields.length > 0) {
       selectFields = { id: true, createdAt: true, updatedAt: true };
       if (fields.includes('versions')) {
-        const [relatedVersions, totalVersions] = await this.versionRepository.findAndCount({
-          where: {
-            service: {
-              id: id,
+        const [relatedVersions, totalVersions] =
+          await this.versionRepository.findAndCount({
+            where: {
+              service: {
+                id: id,
+              },
+              isActive: true,
             },
-            isActive: true,
-          },
-          order: {
-            createdAt: 'DESC',
-          },
-          take: 2,
-        });
+            order: {
+              createdAt: 'DESC',
+            },
+            take: 2,
+          });
         topVersions.push(...relatedVersions);
         totalVersionCount = totalVersions;
       }
@@ -104,8 +110,9 @@ export class ServicesService {
 
       selectFields = {
         ...selectFields,
-        ...fields.filter((field) => field !== 'versions' && field !== 'user')
-          .reduce((acc, field) => ({ ...acc, [field]: true }), {})
+        ...fields
+          .filter((field) => field !== 'versions' && field !== 'user')
+          .reduce((acc, field) => ({ ...acc, [field]: true }), {}),
       };
     }
 
@@ -118,8 +125,8 @@ export class ServicesService {
       },
       select: selectFields,
       relations,
-    }
-    
+    };
+
     const service = await this.serviceRepository.findOne(options);
     if (!service) {
       throw new NotFoundException('Service not found');
@@ -133,11 +140,11 @@ export class ServicesService {
     };
   }
 
-  public async update(id: string, updateServiceDto: UpdateServiceDto) {
+  public update(id: string, updateServiceDto: UpdateServiceDto) {
     throw new NotImplementedException();
   }
 
-  public async remove(id: string) {
+  public remove(id: string) {
     throw new NotImplementedException();
   }
 

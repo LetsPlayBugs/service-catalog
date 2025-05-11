@@ -8,7 +8,7 @@ import { Request } from 'express';
 
 export interface Filtering {
   property: string;
-  rule: string;
+  rule: FilterRule;
   value: string;
 }
 
@@ -37,6 +37,6 @@ export const FilteringParams = createParamDecorator(
       throw new BadRequestException(`Invalid filter property: ${property}`);
     if (!Object.values(FilterRule).includes(rule as FilterRule))
       throw new BadRequestException(`Invalid filter rule: ${rule}`);
-    return { property, rule, value };
+    return { property, rule: rule as FilterRule, value };
   },
 );

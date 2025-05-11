@@ -35,7 +35,8 @@ async function bootstrap() {
   );
   setupSwagger(app);
   const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
+  const port = configService.get<number>('PORT');
   await app.listen(port ?? 3000);
 }
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

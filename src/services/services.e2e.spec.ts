@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
@@ -10,7 +11,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Service } from './entities/service.entity';
 import { Version } from '../versions/entities/version.entity';
 import { DataSource } from 'typeorm';
-import { servicesVersion } from 'typescript';
 
 describe('ServicesController (e2e)', () => {
   let app: INestApplication<App>;
@@ -68,8 +68,8 @@ describe('ServicesController (e2e)', () => {
       if (i % 2 === 0) {
         service.versions.push(new Version(`2.0.${i}`, false, service));
       }
-      service.versions.push(new Version(`3.0.${i}`, true, service))
-      service.versions.push(new Version(`4.0.${i}`, false, service))
+      service.versions.push(new Version(`3.0.${i}`, true, service));
+      service.versions.push(new Version(`4.0.${i}`, false, service));
     }
 
     await userRepository.save(testUser);
@@ -79,7 +79,7 @@ describe('ServicesController (e2e)', () => {
       'test@example.com',
       'password123',
     );
-    const loginResult = await authService.login(user);
+    const loginResult = authService.login(user);
     token = loginResult.access_token;
   });
 
@@ -348,7 +348,7 @@ describe('ServicesController (e2e)', () => {
             name: 'Service a',
             description: 'Description a',
             createdAt: expect.any(String),
-            updatedAt: expect.any(String)
+            updatedAt: expect.any(String),
           });
         });
     });
@@ -359,7 +359,7 @@ describe('ServicesController (e2e)', () => {
         .get(`/v1/services/${serviceId}`)
         .set('Authorization', `Bearer ${token}`)
         .query({
-          'fields[]': 'random'
+          'fields[]': 'random',
         })
         .expect(400)
         .expect((res) => {
@@ -392,7 +392,7 @@ describe('ServicesController (e2e)', () => {
         .get(`/v1/services/${serviceId}`)
         .set('Authorization', `Bearer ${token}`)
         .query({
-          'fields[]': 'name'
+          'fields[]': 'name',
         })
         .expect(200)
         .expect((res) => {
@@ -411,7 +411,7 @@ describe('ServicesController (e2e)', () => {
         .get(`/v1/services/${serviceId}`)
         .set('Authorization', `Bearer ${token}`)
         .query({
-          'fields[]': 'name,description'
+          'fields[]': 'name,description',
         })
         .expect(200)
         .expect((res) => {
@@ -431,7 +431,7 @@ describe('ServicesController (e2e)', () => {
         .get(`/v1/services/${serviceId}`)
         .set('Authorization', `Bearer ${token}`)
         .query({
-          'fields[]': 'name,description,user'
+          'fields[]': 'name,description,user',
         })
         .expect(200)
         .expect((res) => {
@@ -447,7 +447,7 @@ describe('ServicesController (e2e)', () => {
               email: testUser.email,
               createdAt: expect.any(String),
               updatedAt: expect.any(String),
-            }
+            },
           });
         });
     });
@@ -455,16 +455,17 @@ describe('ServicesController (e2e)', () => {
     it('handles versions field', async () => {
       const service = testUser.services[0];
       const serviceId = service.id;
-      
+
       for (let i = 0; i < service.versions.length; i++) {
-        service.versions[i].createdAt = new Date(Date.now() + i * 1000);      }
+        service.versions[i].createdAt = new Date(Date.now() + i * 1000);
+      }
       await serviceRepository.save(service);
 
       return request(app.getHttpServer())
         .get(`/v1/services/${serviceId}`)
         .set('Authorization', `Bearer ${token}`)
         .query({
-          'fields[]': 'name,description,user,versions'
+          'fields[]': 'name,description,user,versions',
         })
         .expect(200)
         .expect((res) => {
@@ -506,7 +507,9 @@ describe('ServicesController (e2e)', () => {
     it('handles array query param format', () => {
       const serviceId = testUser.services[0].id;
       return request(app.getHttpServer())
-        .get(`/v1/services/${serviceId}?fields[]=name&fields[]=description&fields[]=user`)
+        .get(
+          `/v1/services/${serviceId}?fields[]=name&fields[]=description&fields[]=user`,
+        )
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .expect((res) => {
@@ -521,7 +524,7 @@ describe('ServicesController (e2e)', () => {
               email: testUser.email,
               createdAt: expect.any(String),
               updatedAt: expect.any(String),
-            }
+            },
           });
         });
     });

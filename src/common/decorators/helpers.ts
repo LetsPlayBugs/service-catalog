@@ -8,7 +8,7 @@ export const getOrder = (sort: Sorting) =>
 
 export const getWhere = (filter: Filtering) => {
   if (!filter) return {};
-  if (filter.rule == FilterRule.SEARCH) {
+  if (filter.rule === FilterRule.SEARCH) {
     return {
       [filter.property]: Raw((alias) => `similarity(${alias}, :value) > 0.1`, {
         [filter.property]: filter.value,
