@@ -8,7 +8,6 @@ import {
   Delete,
   UseGuards,
   Query,
-  Req,
   BadRequestException,
   ParseUUIDPipe,
 } from '@nestjs/common';
@@ -29,7 +28,7 @@ import { FindOneResponseDto } from './response/findOne.response.dto';
 @Controller('v1/services')
 @UseGuards(AuthenticationGuard)
 export class ServicesController {
-  constructor(private readonly servicesService: ServicesService) {  }
+  constructor(private readonly servicesService: ServicesService) {}
 
   @Post()
   create(@Body() createServiceDto: CreateServiceDto) {
@@ -50,9 +49,9 @@ export class ServicesController {
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
     @Query('fields[]') fields: string | string[],
-    @CurrentUser() user: AuthenticatedUser
+    @CurrentUser() user: AuthenticatedUser,
   ) {
-    const fieldsArray = this.parseFields(fields);    
+    const fieldsArray = this.parseFields(fields);
     if (!this.validFields(fieldsArray)) {
       throw new BadRequestException('Invalid fields');
     }
@@ -83,6 +82,6 @@ export class ServicesController {
       return true;
     }
     const columns = Object.keys(this.servicesService.getColumns());
-    return fields.every(field => columns.includes(field));
+    return fields.every((field) => columns.includes(field));
   }
 }

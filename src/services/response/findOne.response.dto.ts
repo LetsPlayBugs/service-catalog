@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Service } from "../entities/service.entity";
-import { Expose, Type } from "class-transformer";
-import { VersionResponseDto } from "src/versions/response/version.response.dto";
-import { UserResponseDto } from "src/users/response/user.response.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { Service } from '../entities/service.entity';
+import { Expose, Type } from 'class-transformer';
+import { VersionResponseDto } from 'src/versions/response/version.response.dto';
+import { UserResponseDto } from 'src/users/response/user.response.dto';
 
 export class FindOneResponseDto {
   @ApiProperty({
@@ -33,18 +33,18 @@ export class FindOneResponseDto {
   })
   @Expose()
   name!: string;
-  
+
   @ApiProperty({
     type: String,
   })
   @Expose()
-  description!: string; 
+  description!: string;
 
   @ApiProperty({
     type: String,
-  })  
+  })
   @Expose()
-  createdAt!: string;   
+  createdAt!: string;
 
   @ApiProperty({
     type: String,

@@ -1,7 +1,6 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { CommonEntity } from '../../base.entity';
 import { Service } from '../../services/entities/service.entity';
-import { Version } from 'src/versions/entities/version.entity';
 
 @Entity()
 export class User extends CommonEntity {

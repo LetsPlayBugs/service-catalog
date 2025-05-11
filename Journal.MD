@@ -44,6 +44,7 @@
 
 7. **Development & testing**
    - Implement circular dependency
+   - Implement automated import sorting.
 
 8. **Authentication & Authorization**
    - Token storage and revocation
