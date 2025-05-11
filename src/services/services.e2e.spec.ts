@@ -482,7 +482,7 @@ describe('ServicesController (e2e)', () => {
               createdAt: expect.any(String),
               updatedAt: expect.any(String),
             },
-            totalVersions: 2,
+            totalActiveVersions: 2,
             // Note it should only return 2 versions and they should be sorted by createdAt
             versions: expect.arrayContaining([
               expect.objectContaining({

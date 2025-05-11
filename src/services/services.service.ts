@@ -88,7 +88,7 @@ export class ServicesService {
     if (fields && fields.length > 0) {
       selectFields = { id: true, createdAt: true, updatedAt: true };
       if (fields.includes('versions')) {
-        const [relatedVersions, totalVersions] =
+        const [relatedVersions, totalActiveVersions] =
           await this.versionRepository.findAndCount({
             where: {
               service: {
@@ -102,7 +102,7 @@ export class ServicesService {
             take: 2,
           });
         topVersions.push(...relatedVersions);
-        totalVersionCount = totalVersions;
+        totalVersionCount = totalActiveVersions;
       }
       if (fields.includes('user')) {
         relations.push('user');
@@ -135,7 +135,7 @@ export class ServicesService {
       ...service,
       ...(topVersions.length > 0 && {
         versions: topVersions,
-        totalVersions: totalVersionCount,
+        totalActiveVersions: totalVersionCount,
       }),
     };
   }

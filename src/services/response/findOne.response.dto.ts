@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Service } from '../entities/service.entity';
 import { Expose, Type } from 'class-transformer';
-import { VersionResponseDto } from 'src/versions/response/version.response.dto';
-import { UserResponseDto } from 'src/users/response/user.response.dto';
+import { VersionResponseDto } from '../../versions/response/version.response.dto';
+import { UserResponseDto } from '../../users/response/user.response.dto';
 
 export class FindOneResponseDto {
   @ApiProperty({
@@ -56,5 +56,5 @@ export class FindOneResponseDto {
     type: Number,
   })
   @Expose()
-  totalVersions!: number;
+  totalActiveVersions!: number;
 }

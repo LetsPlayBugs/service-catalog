@@ -25,8 +25,17 @@ import { CurrentUser } from '../authentication/decorators/current-user.decorator
 import type { AuthenticatedUser } from '../authentication/authentication.service';
 import { plainToInstance } from 'class-transformer';
 import { FindOneResponseDto } from './response/findOne.response.dto';
+import {
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
+
 @Controller('v1/services')
 @UseGuards(AuthenticationGuard)
+@ApiBearerAuth()
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
@@ -36,7 +45,36 @@ export class ServicesController {
   }
 
   @Get()
-  findAll(
+  @ApiOperation({ summary: 'Get all services' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns a paginated list of services',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number (0-based)',
+  })
+  @ApiQuery({
+    name: 'size',
+    required: false,
+    type: Number,
+    description: 'Number of items per page',
+  })
+  @ApiQuery({
+    name: 'sort',
+    required: false,
+    type: String,
+    description: 'Sort field and direction (e.g., "name:desc")',
+  })
+  @ApiQuery({
+    name: 'filter',
+    required: false,
+    type: String,
+    description: 'Filter criteria (e.g., "name:search:value")',
+  })
+  async findAll(
     @PaginationParams() pagination: Pagination,
     @SortingParams(['name']) sort: Sorting,
     @FilteringParams(['name']) filter: Filtering,
@@ -46,6 +84,18 @@ export class ServicesController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a service by ID' })
+  @ApiResponse({ status: 200, description: 'Returns the service' })
+  @ApiResponse({ status: 404, description: 'Service not found' })
+  @ApiParam({ name: 'id', type: String, description: 'Service ID' })
+  @ApiQuery({
+    name: 'fields[]',
+    required: false,
+    type: String,
+    isArray: true,
+    description:
+      'Fields to include in the response. Allowed values: name, description, versions (returns the latest two active versions), user',
+  })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string,
     @Query('fields[]') fields: string | string[],
