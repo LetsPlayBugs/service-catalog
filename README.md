@@ -46,7 +46,7 @@ pnpm seed:run
 cp .env.example .env
 ```
 
-4. Run the application
+6. Run the application
 ```bash
 pnpm start:dev
 ```
