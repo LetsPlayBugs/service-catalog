@@ -56,7 +56,10 @@ jobs:
         run: pnpm lint
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:cov
         env:
           NODE_ENV: test
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres_test
+      - name: Update Coverage Badge
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: we-cli/coverage-badge-action@main

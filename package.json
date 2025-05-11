@@ -86,6 +86,9 @@
     "coveragePathIgnorePatterns": [
       "/database/"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageReporters": [
+      ["json", { "file": "coverage-summary.json" }]
+    ]
   }
 }
