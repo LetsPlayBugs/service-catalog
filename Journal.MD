@@ -95,7 +95,7 @@ Commits were not done through pull requests as this project is a demonstration. 
  - The project must be large enough to justify the development cost of a DAL.
 
 ### Offset Pagination
- - The scenerio dictates that this is a "new" application and services are static data. As such I have chosen offset pagination as it is simple and fast to implement.
+ - The scenerio dictates that this is a "new" application and that data is static. As such I have chosen offset pagination as it is simple and fast to implement.
  - If this was not a new application and the data changes frequently, offset based pagination has several several drawbacks.
    - Poor reactivity to insert/deletes.
    - Poor performance at the tail end of large datasets.
